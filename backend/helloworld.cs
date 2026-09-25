@@ -47,21 +47,6 @@ namespace HelloWorld
 // Der anbefales at man bruger beskrivende navne for effektiv
 // læsevenlighed og vedligeholdelse
 
-namespace Number
-{
-    class Number
-    {
-        static void Main(int[] args)
-        {
-            int minute = 60;
-            double theNumber = 4.32D;
-            char Letter = 'D';
-            bool amIReal = true;
-            string hello = "world"; // kan være sensitiv for brug af ''. Skal være "".
-        }
-    }
-}
-
 // Type Casting 
 // Tildeler en data værdi til en anden data type
 // Man kan gøre det eksplicit eller implicit
@@ -70,9 +55,9 @@ namespace Number
 
 namespace userApi
 {
-    class getUser
+    class GetUser
     {
-        static void Main(string[] args)
+        static void Main(any[] args)
         {
             Console.WriteLine("Enter username:");
             string userName = Console.ReadLine();

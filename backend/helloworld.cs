@@ -1,5 +1,3 @@
-using System;
-
 // vi bruger klasser fra System namespace
 // er for at holde struktur & orden på koden. 
 // Kan ses som en container for klasser og diverse namespaces
@@ -12,7 +10,7 @@ namespace HelloWorld
 
     {
         // Main er metoden.
-        static void Main(string[] args)
+        static void Main()
         {
             const string name = "Katja";
             const string lastName = "Jacobsen";
@@ -52,17 +50,3 @@ namespace HelloWorld
 // Man kan gøre det eksplicit eller implicit
 
 // GET USER
-
-namespace userApi
-{
-    class GetUser
-    {
-        static void Main(any[] args)
-        {
-            Console.WriteLine("Enter username:");
-            string userName = Console.ReadLine();
-            Console.WriteLine("Hello " + userName);
-            
-        }
-    }
-}

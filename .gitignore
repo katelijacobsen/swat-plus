@@ -3,6 +3,53 @@
 /node_modules
 /build
 
+# Mai har tilføjet for både mobile og web, start #
+# dependencies
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# misc
+.DS_Store
+*.pem
+
+# vercel
+.vercel
+
+# next.js
+/.next/
+/out/
+
+# typescript
+next-env.d.ts
+
+############## mobile #################
+# Expo
+.expo/
+expo-env.d.ts
+
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# generated native folders
+/ios
+/android
+
+############## Mai har tilføjet, end ###############
+
 # TypeScript build cache
 *.tsbuildinfo
 

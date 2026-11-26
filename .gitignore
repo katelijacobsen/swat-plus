@@ -3,7 +3,7 @@
 /node_modules
 /build
 
-# Mai har tilføjet for både mobile og web, start #
+###################### Mai har tilføjet for både mobile og web, start #####################
 # dependencies
 /.pnp
 .pnp.*

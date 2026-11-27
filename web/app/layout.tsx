@@ -38,7 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <div className="w-fit px-4 border-2 border-fuchsia-700 rounded-2xl">Role label</div>
           </div>
         </header>
-        <main className="h-full fullbleed bg-mauve-200">
+        <main className="max-h-full fullbleed bg-mauve-200">
           {children}
         </main>
       </body>

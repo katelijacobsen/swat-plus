@@ -1,18 +1,79 @@
+#-- Compose NESTJS og Postgres med Docker.
+# For at køre filen skrives i terminalen 'docker compose up --build -d'
+# Skal den afbrydes skrives i terminalen 'docker compose down'
+
+
+# - Vi beskriver her at projektnavnet er swat-plus på vores container
 name: swat-plus
+# Vi fortæller at vi bruger Postgres som en af vores services.
 services:
-  db:
-    image: 'postgres:18-alpine'
+  postgres:
+    # Der anvendes den officielle postgres-image til projektet med en låst version.
+    # Der vil ikke være en egen Dockerfile, dvs. imaget sættes op med miljøvariabler
+    # der bruges alpine til at den kan bygges med linux
+    image: postgres:18-alpine
+    container_name: swat-plus
     environment:
+      # Når den bliver for første gang startet op, oprettes databasen og brugeren med env's
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      # Her beskrives at den skal søge password fra en fil i stedet for .env
+      # kan i teorien været en hjælp så den ikke kan findes frem med 'docker inspect'
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    # vi bruger post progres port 5432 5433 i stedet, da den anden lige pt er opdaget.
+    # køres lige nu lokalt med 127.0.0.1
+    ports:
+      - "127.0.0.1:5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      retries: 10
+    # Vores navngivet volumes
+    volumes:
+      # Vi fortæller Postgres at den skal monterer ved den sti vi hentyder til, ellers error
+      - postgres_data:/var/lib/postgresql
+      # Måden SQL-filen bliver kørt på automatisk i rækkefølge
+      # der bliver tilføjet :ro (read only) så containeren kun kan læse filen og ikke andet
+      - ./database:/docker-entrypoint-initdb.d:ro
+    # Vi giver containeren lov til adgang med en definieret fil
+    # den bliver tilgængelig fra den sti vi har beskrevet i POSTGRES_PASSWORD_FILE (linje 32)
     secrets:
       - postgres_password
-    volumes:
-      -
+    # DB'en er kun på det internet netværk sammen med backend
     networks:
-      -
+      - backend_net
+  backend:
+    build:
+      context: ./backend
+    environment:
+        PORT: 3000
+        DB_HOST: postgres
+        DB_PORT: 5432
+        DB_NAME: ${POSTGRES_DB}
+        DB_USER: ${POSTGRES_USER}
+        DB_PASSWORD_FILE: /run/secrets/postgres_password
+    # lokalt og lytter inde i containeren. Den vil læse i src, herunder main.ts i backend
     ports:
       - "3000:3000"
-    healthcheck:
-      test: [""]
+    networks:
+      - backend_net
+    # Lige pt fortæller vi at hvis Databasen er stabil så må backend gerne starte.
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+        resources:
+          limits:
+            cpus: "0.5" # Hvor meget den højst må bruge
+            memory: 512M # Samme som CPUS
+    restart: unless-stopped
+
+networks:
+    backend_net:
+
+volumes:
+  postgres_data:
+# Password, som ikke må committes
+# Filen må KUN INDEHOLDE selve password
+secrets:
+  postgres_password:
+    file: ./secrets/postgres_password.txt

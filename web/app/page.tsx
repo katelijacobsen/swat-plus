@@ -28,7 +28,7 @@ export default function Home() {
         <section className="bg-amber-50 col-span-full grid grid-cols-[2fr_1fr] grid-rows-2 p-6 rounded-md">
           <h2>Digital hjælpe kø</h2>
           <p>2 studerende i kø</p>
-          <Link className="w-fit px-7 py-1.5 col-end-3 row-start-1 row-end-3 self-center justify-self-end bg-blue-700 rounded-md" href="#">Stil dig i kø her</Link>
+          <Link href="/Queue" className="w-fit px-7 py-1.5 col-end-3 row-start-1 row-end-3 self-center justify-self-end bg-blue-700 rounded-md">Stil dig i kø her</Link>
         </section>
       </div>
     </section>

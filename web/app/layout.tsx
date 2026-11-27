@@ -30,7 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <div className="w-16 aspect-square bg-amber-300">Logo her</div>
             <nav>
               <ul className="flex gap-12">
-                <Link href={"#"}>Home</Link>
+                <Link href={"/"}>Home</Link>
                 <Link href={"/Queue"}>Queue</Link>
                 <Link href={"/Calendar"}>Calendar</Link>
               </ul>
@@ -38,7 +38,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <div className="w-fit px-4 border-2 border-fuchsia-700 rounded-2xl">Role label</div>
           </div>
         </header>
-        {children}
+        <main className="h-full fullbleed bg-mauve-200">
+          {children}
+        </main>
       </body>
     </html>
   );

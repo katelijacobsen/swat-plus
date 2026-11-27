@@ -31,8 +31,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <nav>
               <ul className="flex gap-12">
                 <Link href={"#"}>Home</Link>
-                <Link href={"#"}>Queue</Link>
-                <Link href={"#"}>Calendar</Link>
+                <Link href={"/Queue"}>Queue</Link>
+                <Link href={"/Calendar"}>Calendar</Link>
               </ul>
             </nav>
             <div className="w-fit px-4 border-2 border-fuchsia-700 rounded-2xl">Role label</div>
